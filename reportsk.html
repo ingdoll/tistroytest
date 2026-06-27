@@ -1139,20 +1139,27 @@
         </div>
         {% endfor %}
     <script>
+        // 현재 브라우저의 가로 폭을 기억해둡니다.
+        let lastWidth = window.innerWidth;
+
         function sendHeight() {
-            // 문서의 실제 높이 측정
             const height = document.documentElement.scrollHeight || document.body.scrollHeight;
-            // 부모 창(티스토리)으로 '나 지금 이만큼 길어!'라고 메세지 전송
             window.parent.postMessage({ type: 'resize-iframe', height: height }, '*');
         }
 
-        // 페이지 로드 완료 시 실행 (차트 렌더링 딜레이를 고려해 0.1초 지연 실행)
+        // 1. 처음 로딩되었을 때 높이 전송
         window.addEventListener('load', function() {
             setTimeout(sendHeight, 100);
         });
 
-        // 혹시 창 크기가 변하면(반응형 대비) 높이 다시 측정해서 보냄
-        window.addEventListener('resize', sendHeight);
+        // 2. 창 크기가 변할 때 실행하되, '가로 폭'이 변했을 때만 높이를 다시 보냅니다.
+        // (세로 높이 변화로 인해 무한 루프가 도는 것을 방지합니다.)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth !== lastWidth) {
+                lastWidth = window.innerWidth; // 새로운 가로 폭 저장
+                sendHeight();
+            }
+        });
     </script>
 </body>
-</html>        
+</html>
