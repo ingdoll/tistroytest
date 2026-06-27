@@ -250,26 +250,16 @@
             padding: 0 2px;
         }
 
-        @container (max-width: 1250px) {
+        @container (max-width: 1200px) {
             .category-container {
                 grid-template-columns: repeat(2, 1fr); /* 2열로 변경 */
             }
         }
-        @media (max-width: 1250px) {
-            .category-container {
-                grid-template-columns: repeat(2, 1fr); /* 2열로 변경 */
-            }
-        }        
         @container (max-width: 850px) {
             .category-container {
                 grid-template-columns: repeat(1, 1fr);
             }
         }
-        @media (max-width: 850px) {
-            .category-container {
-                grid-template-columns: repeat(1, 1fr);
-            }
-        }        
         @media print {
             @page { size: A4 portrait; margin: 0; padding: 15mm 20mm;}
             body{
